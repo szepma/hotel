@@ -47,6 +47,24 @@ public class BookingController extends HttpServlet {
                     returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
                 }
                 out.print(returnValue);
+            }   
+            //end
+            
+            //updateBookingStatusById
+            if (request.getParameter("task").equals("updateBookingStatusById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty() && !request.getParameter("status").isEmpty()) {
+                    Bookings bo = Bookings.getBookingsById(Integer.parseInt(request.getParameter("id")));
+                    bo.setBookingstatusid(Integer.parseInt(request.getParameter("status")));
+                    
+                    String result = BookingService.updateBookingStatusById(bo);
+                    returnValue.put("result", result);
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek jól kitöltve");
+                }
+                out.print(returnValue);
             }
         }
         catch (Exception ex) {

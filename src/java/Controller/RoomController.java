@@ -38,6 +38,7 @@ public class RoomController extends HttpServlet {
                 }
                 out.print(returnValue.toString());
             }
+            //end
             
             //updateRoomStatusById
             if (request.getParameter("task").equals("updateRoomStatusById")) {

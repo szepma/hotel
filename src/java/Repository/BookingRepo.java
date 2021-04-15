@@ -40,4 +40,25 @@ public class BookingRepo {
             return false;
         }
     }
+    
+     public static boolean updateBookingStatusById(Bookings bo) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("updateBookingStatusById");
+            
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("statusIN", Integer.class, ParameterMode.IN);
+            
+            spq.setParameter("idIN", bo.getBookingid());
+            spq.setParameter("statusIN", bo.getBookingstatusid());
+            
+            spq.execute();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
 }

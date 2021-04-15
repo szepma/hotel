@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -93,6 +94,11 @@ public class Bookings implements Serializable {
         this.roomid = roomid;
     }
 
+    public static Bookings getBookingsById(int id) {
+        EntityManager em = Database.getDbConn();
+        return em.find(Bookings.class, id);
+    }
+    
     public Integer getBookingid() {
         return bookingid;
     }

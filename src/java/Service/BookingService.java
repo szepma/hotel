@@ -17,4 +17,13 @@ public class BookingService {
             return "Az adatok nem megfelelőek";
         }
     }
+    
+    public static String updateBookingStatusById(Bookings bo) {
+        if (BookingRepo.updateBookingStatusById(bo)) {
+            return "A foglalás státuszának módosítása sikeresen megtörtént";
+        }
+        else {
+            return "A módosítás siertelen";
+        }
+    }
 }
