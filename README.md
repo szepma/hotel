@@ -1,5 +1,5 @@
 Adatbázis meg egyéb cuccok itt: https://github.com/szepma/hotel_stuff
 
-Megvan: Bookings táblán kívül mindenbe lehet adatot feltölteni Postmanen keresztül.
+Megvan: Minden táblába lehet adatot feltölteni JSON objjecten keresztül
 
-TODO: Bookings tábla.
+TODO: Üzleti logika, Update, Törlés, meg ami még most nem jut eszembe
