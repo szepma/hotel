@@ -29,4 +29,26 @@ public class RoomsRepo {
             return false;
         }
     }
+    
+    public static boolean updateRoomStatusById(Rooms room) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("updateRoomStatusById");
+            
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("statusIN", Integer.class, ParameterMode.IN);
+            
+            spq.setParameter("idIN", room.getRoomid());
+            spq.setParameter("statusIN", room.getRoomStatusId());
+            
+            spq.execute();
+            return true;
+            
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
 }

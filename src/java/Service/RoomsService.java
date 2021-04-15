@@ -17,4 +17,13 @@ public class RoomsService {
             return "A megadott adatok helytelenek";
         }
     }
+    
+    public static String updateRoomStatusById(Rooms room) {
+        if (RoomsRepo.updateRoomStatusById(room)) {
+            return "A szobastátusz módosítása sikeresen megtörtént";
+        }
+        else {
+            return "A módosítás sikertelen";
+        }
+    }
 }

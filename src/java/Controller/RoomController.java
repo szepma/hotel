@@ -38,6 +38,23 @@ public class RoomController extends HttpServlet {
                 }
                 out.print(returnValue.toString());
             }
+            
+            //updateRoomStatusById
+            if (request.getParameter("task").equals("updateRoomStatusById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty() && !request.getParameter("status").isEmpty()) {
+                    Rooms room = Rooms.getRoomsById(Integer.parseInt(request.getParameter("id")));
+                    room.setRoomStatusId(Integer.parseInt(request.getParameter("status")));
+                    
+                    String result = RoomsService.updateRoomStatusById(room);
+                    returnValue.put("result", result);
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek jól kitöltve");
+                }
+                out.print(returnValue);
+            }
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -60,6 +61,11 @@ public class Rooms implements Serializable {
         this.capacity = capacity;
         this.roomStatusId = roomStatusId;
         this.extraId = extraId;
+    }
+    
+    public static Rooms getRoomsById(int id) {
+        EntityManager em = Database.getDbConn();
+        return em.find(Rooms.class, id);
     }
 
     public Integer getRoomid() {
