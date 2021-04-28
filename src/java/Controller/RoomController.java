@@ -65,13 +65,13 @@ public class RoomController extends HttpServlet {
                 JSONArray returnValue = new JSONArray();
                 List<Rooms> rooms = RoomsService.getAllRooms();
                 
-                if (rooms.isEmpty()) {
-                    returnValue.put(new JSONObject("result", "Nincs megjeleníthető szoba"));
-                }
-                else {
+                if (!rooms.isEmpty()) {
                     for (Rooms room : rooms) {
                         returnValue.put(room.toJson());
                     }
+                }
+                else {
+                    returnValue.put(new JSONObject("result", "Nincs megjeleníthető szoba"));
                 }
                 out.print(returnValue);
             }
