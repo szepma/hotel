@@ -13,8 +13,6 @@
             var table = document.getElementById("roomTable");
             var request = {"task": "getAllRooms"};
             
-            console.log(request);
-            
             $.ajax({
                 url: "RoomController",
                 type: "POST",
@@ -22,14 +20,27 @@
                 success: function(response) {
                     for (var i = 0; i < response.length; i++) {
                         var newTr = table.insertRow(i + 1);
+                        
                         var newId = newTr.insertCell(0);
                         newId.innerHTML = response[i].roomid;
+                        
                         var newCapacity = newTr.insertCell(1);
                         newCapacity.innerHTML = response[i].capacity;
+                        
                         var newRoomStatus = newTr.insertCell(2);
                         newRoomStatus.innerHTML = response[i].roomStatusId;
+                        
                         var newExtra = newTr.insertCell(3);
                         newExtra.innerHTML = response[i].extraId;
+                        
+                        var newPrice = newTr.insertCell(4);
+                        newPrice.innerHTML = response[i].price;
+                        
+                        var newPicture = newTr.insertCell(5);
+                        newPicture.innerHTML = response[i].picture;
+                        
+                        var newDesc = newTr.insertCell(6);
+                        newDesc.innerHTML = response[i].description;
                     }
                 },
                 error: function(){}
@@ -37,14 +48,17 @@
         }
         
         function addNewRoomStatus() {
-            var statusInput = document.getElementById("statusIn");
-            var request = {"task": statusInput.textContent};
+            var statusInput = document.getElementById("statusIn").value;
+            var request = {"task": "addNewRoomStatus",
+                            "status": statusInput};
             
             $.ajax({
                 url: "RoomStatusController",
                 type: "POST",
                 data: request,
-                success: function(){},
+                success: function(){
+                    alert("siker");
+                },
                 error: function(){
                     alert("hiba");
                 }
@@ -59,6 +73,9 @@
                 <td>capacity</td>
                 <td>roomstatus</td>
                 <td>extra</td>
+                <td>price</td>
+                <td>picture</td>
+                <td>description</td>
             </tr>
         </table>
         
