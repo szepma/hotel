@@ -18,10 +18,16 @@ public class RoomsRepo {
             spq.registerStoredProcedureParameter("capacityIN", Integer.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("room_statusIN", Integer.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("extraIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("priceIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("pictureIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("descIN", String.class, ParameterMode.IN);
             
             spq.setParameter("capacityIN", room.getCapacity());
             spq.setParameter("room_statusIN", room.getRoomStatusId());
             spq.setParameter("extraIN", room.getExtraId());
+            spq.setParameter("priceIN", room.getPrice());
+            spq.setParameter("pictureIN", room.getPicture());
+            spq.setParameter("descIN", room.getDescription());
             
             spq.execute();
             return true;

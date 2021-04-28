@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RoomsService {
     public static String addNewRoom(Rooms room) {
-        if (room.getCapacity() > 0 && room.getRoomStatusId() > 0 && room.getExtraId() > 0) {
+        if (room.getCapacity() > 0 && room.getRoomStatusId() > 0 && room.getExtraId() > 0 && room.getPrice() > 0 && room.getPicture().length() > 0 && room.getDescription().length() > 0) {
             if (RoomsRepo.addNewRoom(room)) {
                 return "Az új szoba rögzítése sikeresen megtörtént";
             }

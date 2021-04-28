@@ -25,12 +25,15 @@ public class RoomController extends HttpServlet {
             if (request.getParameter("task").equals("addNewRoom")) {
                 JSONObject returnValue = new JSONObject();
                 
-                if (!request.getParameter("capacity").isEmpty() && !request.getParameter("room_status").isEmpty() && !request.getParameter("extra").isEmpty()) {
+                if (!request.getParameter("capacity").isEmpty() && !request.getParameter("room_status").isEmpty() && !request.getParameter("extra").isEmpty() && !request.getParameter("price").isEmpty() && !request.getParameter("picture").isEmpty() && !request.getParameter("description").isEmpty()) {
                     Integer capacity = Integer.parseInt(request.getParameter("capacity"));
                     Integer roomStatus = Integer.parseInt(request.getParameter("room_status"));
                     Integer extra = Integer.parseInt(request.getParameter("extra"));
+                    Integer price = Integer.parseInt(request.getParameter("price"));
+                    String picture = request.getParameter("picture");
+                    String description = request.getParameter("description");
                     
-                    Rooms room = new Rooms(0, capacity, roomStatus, extra);
+                    Rooms room = new Rooms(0, capacity, roomStatus, extra, price, picture, description);
                     
                     String result = RoomsService.addNewRoom(room);
                     returnValue.put("result", result);

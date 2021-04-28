@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -31,7 +32,9 @@ import org.json.JSONObject;
     @NamedQuery(name = "Rooms.findByRoomid", query = "SELECT r FROM Rooms r WHERE r.roomid = :roomid"),
     @NamedQuery(name = "Rooms.findByCapacity", query = "SELECT r FROM Rooms r WHERE r.capacity = :capacity"),
     @NamedQuery(name = "Rooms.findByRoomStatusId", query = "SELECT r FROM Rooms r WHERE r.roomStatusId = :roomStatusId"),
-    @NamedQuery(name = "Rooms.findByExtraId", query = "SELECT r FROM Rooms r WHERE r.extraId = :extraId")})
+    @NamedQuery(name = "Rooms.findByExtraId", query = "SELECT r FROM Rooms r WHERE r.extraId = :extraId"),
+    @NamedQuery(name = "Rooms.findByPrice", query = "SELECT r FROM Rooms r WHERE r.price = :price"),
+    @NamedQuery(name = "Rooms.findByPicture", query = "SELECT r FROM Rooms r WHERE r.picture = :picture")})
 public class Rooms implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,6 +52,16 @@ public class Rooms implements Serializable {
     @Basic(optional = false)
     @Column(name = "extra_id")
     private int extraId;
+    @Basic(optional = false)
+    @Column(name = "Price")
+    private int price;
+    @Basic(optional = false)
+    @Column(name = "Picture")
+    private String picture;
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "Description")
+    private String description;
 
     public Rooms() {
     }
@@ -57,23 +70,29 @@ public class Rooms implements Serializable {
         this.roomid = roomid;
     }
 
-    public Rooms(Integer roomid, int capacity, int roomStatusId, int extraId) {
+    public Rooms(Integer roomid, int capacity, int roomStatusId, int extraId, int price, String picture, String description) {
         this.roomid = roomid;
         this.capacity = capacity;
         this.roomStatusId = roomStatusId;
         this.extraId = extraId;
+        this.price = price;
+        this.picture = picture;
+        this.description = description;
     }
-    
+
     public JSONObject toJson() {
         JSONObject object = new JSONObject();
         object.put("roomid", this.roomid);
         object.put("capacity", this.capacity);
         object.put("roomStatusId", this.roomStatusId);
         object.put("extraId", this.extraId);
-        
+        object.put("price", this.price);
+        object.put("picture", this.picture);
+        object.put("description", this.description);
+
         return object;
     }
-    
+
     public static Rooms getRoomsById(int id) {
         EntityManager em = Database.getDbConn();
         return em.find(Rooms.class, id);
@@ -91,7 +110,7 @@ public class Rooms implements Serializable {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(short capacity) {
         this.capacity = capacity;
     }
 
@@ -109,6 +128,30 @@ public class Rooms implements Serializable {
 
     public void setExtraId(int extraId) {
         this.extraId = extraId;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -135,5 +178,5 @@ public class Rooms implements Serializable {
     public String toString() {
         return "Model.Rooms[ roomid=" + roomid + " ]";
     }
-    
+
 }

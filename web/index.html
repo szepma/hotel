@@ -1,16 +1,68 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
-    <body>
-        <div>TODO write content</div>
+    
+    <script>
+        function loadRooms() {
+            var table = document.getElementById("roomTable");
+            var request = {"task": "getAllRooms"};
+            
+            console.log(request);
+            
+            $.ajax({
+                url: "RoomController",
+                type: "POST",
+                data: request,
+                success: function(response) {
+                    for (var i = 0; i < response.length; i++) {
+                        var newTr = table.insertRow(i + 1);
+                        var newId = newTr.insertCell(0);
+                        newId.innerHTML = response[i].roomid;
+                        var newCapacity = newTr.insertCell(1);
+                        newCapacity.innerHTML = response[i].capacity;
+                        var newRoomStatus = newTr.insertCell(2);
+                        newRoomStatus.innerHTML = response[i].roomStatusId;
+                        var newExtra = newTr.insertCell(3);
+                        newExtra.innerHTML = response[i].extraId;
+                    }
+                },
+                error: function(){}
+            });
+        }
+        
+        function addNewRoomStatus() {
+            var statusInput = document.getElementById("statusIn");
+            var request = {"task": statusInput.textContent};
+            
+            $.ajax({
+                url: "RoomStatusController",
+                type: "POST",
+                data: request,
+                success: function(){},
+                error: function(){
+                    alert("hiba");
+                }
+            });
+        }
+    </script>
+    
+    <body onload="loadRooms()">
+        <table id="roomTable">
+            <tr>
+                <td>roomid</td>
+                <td>capacity</td>
+                <td>roomstatus</td>
+                <td>extra</td>
+            </tr>
+        </table>
+        
+        <input id="statusIn" type="text">
+        <button onclick="addNewRoomStatus()">Küldés</button>
     </body>
 </html>
