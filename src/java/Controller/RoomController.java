@@ -4,10 +4,12 @@ import Model.Rooms;
 import Service.RoomsService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RoomController extends HttpServlet {
@@ -56,6 +58,24 @@ public class RoomController extends HttpServlet {
                 }
                 out.print(returnValue);
             }
+            //end
+            
+            //getAllRooms
+            if (request.getParameter("task").equals("getAllRooms")) {
+                JSONArray returnValue = new JSONArray();
+                List<Rooms> rooms = RoomsService.getAllRooms();
+                
+                if (rooms.isEmpty()) {
+                    returnValue.put(new JSONObject("result", "Nincs megjeleníthető szoba"));
+                }
+                else {
+                    for (Rooms room : rooms) {
+                        returnValue.put(room.toJson());
+                    }
+                }
+                out.print(returnValue);
+            }
+            //end
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

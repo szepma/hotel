@@ -2,6 +2,8 @@ package Repository;
 
 import Model.Database;
 import Model.Rooms;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
@@ -49,6 +51,28 @@ public class RoomsRepo {
         catch (Exception ex) {
             System.out.println(ex.getMessage());
             return false;
+        }
+    }
+    
+    public static List<Rooms> getAllRooms() {
+        List<Rooms> result = new ArrayList<>();
+        
+        try {
+            EntityManager em = Database.getDbConn();
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllRooms");
+            
+            List<Object[]> rooms = spq.getResultList();
+            for (Object[] room : rooms) {
+                int id = Integer.parseInt(room[0].toString());
+                Rooms r = em.find(Rooms.class, id);
+                result.add(r);
+            }
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            return result;
         }
     }
 }

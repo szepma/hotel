@@ -2,6 +2,7 @@ package Service;
 
 import Model.Rooms;
 import Repository.RoomsRepo;
+import java.util.List;
 
 public class RoomsService {
     public static String addNewRoom(Rooms room) {
@@ -25,5 +26,9 @@ public class RoomsService {
         else {
             return "A módosítás sikertelen";
         }
+    }
+    
+    public static List<Rooms> getAllRooms() {
+        return RoomsRepo.getAllRooms();
     }
 }

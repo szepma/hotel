@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.json.JSONObject;
 
 /**
  *
@@ -61,6 +62,16 @@ public class Rooms implements Serializable {
         this.capacity = capacity;
         this.roomStatusId = roomStatusId;
         this.extraId = extraId;
+    }
+    
+    public JSONObject toJson() {
+        JSONObject object = new JSONObject();
+        object.put("roomid", this.roomid);
+        object.put("capacity", this.capacity);
+        object.put("roomStatusId", this.roomStatusId);
+        object.put("extraId", this.extraId);
+        
+        return object;
     }
     
     public static Rooms getRoomsById(int id) {
