@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,6 +51,11 @@ public class Cities implements Serializable {
     public Cities(Integer cityid, String cityname) {
         this.cityid = cityid;
         this.cityname = cityname;
+    }
+    
+    public static Cities getCityById(int id) {
+        EntityManager em = Database.getDbConn();
+        return em.find(Cities.class, id);
     }
 
     public Integer getCityid() {

@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Zipcodes;
+import Repository.ZipcodeRepo;
 import Service.ZipcodeService;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,6 +37,23 @@ public class ZipcodeController extends HttpServlet {
                 }
                 out.print(returnValue);
             }
+            //end
+            
+            //checkZipcode
+            if (request.getParameter("task").equals("checkZipcode")) {
+                JSONObject returnValue = new JSONObject();
+                
+                Zipcodes zipcode = ZipcodeService.checkZipcode(request.getParameter("zipcode"));
+                
+                if (zipcode.getZipcodeid() == -1) {
+                    returnValue.put("result", "Nincs ilyen");
+                }
+                else {
+                    returnValue.put("result", "Van ilyen");
+                }
+                out.print(returnValue);
+            }
+            //end
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

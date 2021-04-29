@@ -21,4 +21,8 @@ public class GuestService {
             return "Az adatok nem megfelelőek";
         }
     }
+    
+    public static Guests checkGuest(String email) {
+        return GuestRepo.checkGuest(email);
+    }
 }

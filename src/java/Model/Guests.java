@@ -71,7 +71,11 @@ public class Guests implements Serializable {
         this.mobile = mobile;
         this.addressid = addressid;
     }
-
+    
+    public static Guests getGuestById(int id) {
+        return Database.getDbConn().find(Guests.class, id);
+    }
+    
     public Integer getGuestid() {
         return guestid;
     }

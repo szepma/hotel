@@ -40,6 +40,22 @@ public class GuestController extends HttpServlet {
                 }
                 out.print(returnValue.toString());
             }
+            //end
+            
+            //checkGuest
+            if (request.getParameter("task").equals("checkGuest")) {
+                JSONObject returnValue = new JSONObject();
+                
+                Guests guest = GuestService.checkGuest(request.getParameter("email"));
+                
+                if (guest.getGuestid() == -1) {
+                    returnValue.put("result", "Nincs ilyen");
+                }
+                else {
+                    returnValue.put("result", "Van ilyen");
+                }
+                out.print(returnValue);
+            }
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

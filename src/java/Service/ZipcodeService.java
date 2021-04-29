@@ -17,4 +17,8 @@ public class ZipcodeService {
             return "Az irányítószám hosszának 0 és 6 közé kell esnie";
         }
     }
+    
+    public static Zipcodes checkZipcode(String zip) {
+        return ZipcodeRepo.checkZipcode(zip);
+    }
 }

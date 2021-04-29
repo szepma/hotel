@@ -17,4 +17,8 @@ public class CityService {
             return "A városnév hossza 1 és 45 közé kell essen";
         }
     }
+    
+    public static Cities checkCity(String cityName) {
+        return CityRepo.checkCity(cityName);
+    }
 }

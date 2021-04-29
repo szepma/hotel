@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,7 +52,12 @@ public class Zipcodes implements Serializable {
         this.zipcodeid = zipcodeid;
         this.zipcode = zipcode;
     }
-
+    
+    public static Zipcodes getZipcodeById(int id) {
+        EntityManager em = Database.getDbConn();
+        return em.find(Zipcodes.class, id);
+    }
+    
     public Integer getZipcodeid() {
         return zipcodeid;
     }

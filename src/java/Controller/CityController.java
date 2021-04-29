@@ -16,18 +16,18 @@ public class CityController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         try (PrintWriter out = response.getWriter()) {
-            
+
             //addNewCity
             if (request.getParameter("task").equals("addNewCity")) {
                 JSONObject returnValue = new JSONObject();
-                
+
                 if (!request.getParameter("name").isEmpty()) {
                     String name = request.getParameter("name");
-                    
+
                     Cities city = new Cities(0, name);
-                    
+
                     String result = CityService.addNewCity(city);
                     returnValue.put("result", result);
                 }
@@ -35,6 +35,22 @@ public class CityController extends HttpServlet {
                     returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
                 }
                 out.print(returnValue.toString());
+            }
+            //end
+
+            //checkCity
+            if (request.getParameter("task").equals("checkCity")) {
+                JSONObject returnValue = new JSONObject();
+
+                Cities city = CityService.checkCity(request.getParameter("name"));
+
+                if (city.getCityid() == -1) {
+                    returnValue.put("result", "Nincs ilyen");
+                }
+                else {
+                    returnValue.put("result", "Van ilyen");
+                }
+                out.print(returnValue);
             }
         }
         catch (Exception ex) {

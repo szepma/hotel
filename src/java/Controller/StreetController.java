@@ -37,6 +37,23 @@ public class StreetController extends HttpServlet {
                 }
                 out.print(returnValue.toString());
             }
+            //end
+            
+            //checkStreet
+            if (request.getParameter("task").equals("checkStreet")) {
+                JSONObject returnValue = new JSONObject();
+                
+                Streets street = StreetService.checkStreet(request.getParameter("name"));
+                
+                if (street.getZipcodeid() == -1) {
+                    returnValue.put("result", "Nincs ilyen");
+                }
+                else {
+                    returnValue.put("result", "Van ilyen");
+                }
+                
+                out.print(returnValue);
+            }
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

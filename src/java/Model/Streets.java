@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,6 +56,11 @@ public class Streets implements Serializable {
         this.streetid = streetid;
         this.streetname = streetname;
         this.zipcodeid = zipcodeid;
+    }
+    
+    public static Streets getStreetById(int id) {
+        EntityManager em = Database.getDbConn();
+        return em.find(Streets.class, id);
     }
 
     public Integer getStreetid() {

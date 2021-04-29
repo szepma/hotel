@@ -17,4 +17,8 @@ public class StreetService {
             return "Helytelen adatok";
         }
     }
+    
+    public static Streets checkStreet(String streetName) {
+        return StreetRepo.checkStreet(streetName);
+    }
 }
