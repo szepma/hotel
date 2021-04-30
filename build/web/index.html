@@ -5,15 +5,74 @@
         <link rel="stylesheet" href="style.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
+
+    <script>
+        function loadRooms() {
+            var list = document.getElementById("list");
+            var request = {"task": "getAllRooms"};
+            
+            $.ajax({
+                url: "RoomController",
+                type: "POST",
+                data: request,
+                success: function(response) {
+                    for (var i = 0; i < response.length; i++) {
+                        //Create HTML tags
+                        var newDiv = document.createElement("div");
+                        var newTitle = document.createElement("h2");
+                        var newPrice = document.createElement("p");
+                        var newCapacity = document.createElement("p");
+                        var newExtra = document.createElement("p");
+                        var newImgDiv = document.createElement("div");
+                        var newImg = document.createElement("img");
+                        var newImgButton = document.createElement("a");
+                        
+                        //Set class
+                        newDiv.classList.add("szoba");
+                        newImgDiv.classList.add("kepek");
+                        
+                        //Set HTML content
+                        newTitle.innerHTML = response[i].roomid + ". szoba";
+                        newPrice.innerHTML = response[i].price + " Ft/éj";
+                        newCapacity.innerHTML = response[i].capacity + " Ft/éj";
+                        newExtra.innerHTML = response[i].extra;
+                        newImg.src = response[i].picture;
+                        newImgButton.href = "foglalas.html";
+                        newImgButton.innerHTML = "Lefoglalom";
+                        
+                        //Append mgDiv children
+                        newImgDiv.appendChild(newImg);
+                        newImgDiv.appendChild(newImgButton);
+                        
+                        //Append newDiv children
+                        newDiv.appendChild(newTitle);
+                        newDiv.appendChild(newPrice);
+                        newDiv.appendChild(newCapacity);
+                        newDiv.appendChild(newExtra);
+                        newDiv.appendChild(newImgDiv);
+                        
+                        list.appendChild(newDiv);
+                    }
+                },
+                error: function() {
+                    alert("A szobák lekérése sikertelen");
+                }
+            });
+        }
+    </script>
+    
     <header>
         <h1>Hotel weboldal</h1>
     </header>
-    <body>
+    
+    <body onload="loadRooms()">
 
         <h1>Foglaljon szobát most!</h1>
-        <div class="lista">
-            <div class="szoba">
+        <div id="list" class="lista">
+<!--            <div class="szoba">
                 <h2>1. szoba</h2>
                 <p>7990 Ft/éj</p>
                 <p>2 fős</p>
@@ -23,6 +82,7 @@
                     <a href="foglalas.html">Lefoglalom</a>
                 </div>
             </div>
+            
             <div class="szoba">
                 <h2>3. szoba</h2>
                 <p>12990 Ft/éj</p>
@@ -33,6 +93,7 @@
                     <a href="foglalas.html">Lefoglalom</a>
                 </div>
             </div>
+            
             <div class="szoba">
                 <h2>7. szoba</h2>
                 <p>6990 Ft/éj</p>
@@ -42,9 +103,7 @@
                     <img src="res/hotel3.jpg" alt="7szoba">
                     <a href="foglalas.html">Lefoglalom</a>
                 </div>
-            </div>
-
+            </div>-->
         </div>
-
     </body>
 </html>

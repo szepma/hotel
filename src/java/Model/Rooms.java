@@ -85,11 +85,11 @@ public class Rooms implements Serializable {
         object.put("roomid", this.roomid);
         object.put("capacity", this.capacity);
         object.put("roomStatusId", this.roomStatusId);
-        object.put("extraId", this.extraId);
+        object.put("extra", Extras.getExtrasById(this.extraId).getExtraName());
         object.put("price", this.price);
         object.put("picture", this.picture);
         object.put("description", this.description);
-
+        
         return object;
     }
 
