@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Foglalás</title>
+        <link rel="stylesheet" href="style2.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <header>
+        <h1>Foglalja le az alábbi szobát!</h1>
+    </header>
+        <body>
+            <div class="minden_mas">
+            
+            <h2>A szoba paraméterei:</h2>
+            
+
+            <section class="szoba">
+                <h3>X. szoba</h3>
+                <p>X fő</p>
+                <p>X ágy ebből Y francia</p>
+                <p>Extra1</p>
+                <p>Extra2</p>
+                <article>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sagittis sagittis rhoncus. Quisque dolor nisi, posuere ut ex non, tristique porttitor justo. Aliquam erat volutpat. Vestibulum rhoncus massa ut pulvinar euismod. Cras eget metus lobortis, porta ipsum nec, scelerisque neque. Integer rhoncus ut dolor quis maximus. Maecenas ac sapien ultrices, tempus quam a, aliquam velit. Pellentesque malesuada porta dignissim. In dui massa, aliquam sed ex volutpat, mattis efficitur eros. Suspendisse scelerisque ut elit non efficitur. Vivamus vitae justo interdum, molestie urna sed, malesuada metus.</article>
+
+                <img src="res/foglalas1.jpg" alt="1foglalas">
+            </section>
+
+            <section class="foglalas">
+                <form>
+                    <div>
+                        <label>Válassza ki az ellátás típusát:</label><br>
+                        <input type="radio" id="radio1" name="service" value="AllIn">
+                        <label for="radio1">All Inclusive</label><br>
+                        <input type="radio" id="radio2" name="service" value="HalfP">
+                        <label for="radio2">Félpanzió</label><br>
+                        <input type="radio" id="radio3" name="service" value="Onellato">
+                        <label for="radio3">Önellátás</label><br>
+                    </div>
+
+                    <div>
+                        <label>Válassza ki az érkezés napját:</label>
+                        <input type="date" id="arrival" name="erkezes"
+                               value="2021-04-28"
+                               min="2021-01-01" max="2021-12-31"><br>
+                        <label>Válassza ki az távozás napját:</label>
+                        <input type="date" id="leave" name="tavozas"
+                               value="2021-04-28"
+                               min="2021-01-01" max="2021-12-31"><br>
+                    </div>
+
+                    <div>
+                        <label for="lname">Vezetéknév:</label>
+                        <input type="text" id="lname" name="lname" maxlength="25"><br>
+                        <label for="fname">Keresztnév:</label>
+                        <input type="text" id="fname" name="fname" maxlength="25"><br>
+                        <label>Kérem adja meg az e-mail címét:</label>
+                        <input type="email" id="email" name="email" maxlength="65"><br>
+                        <label>Kérem adja meg a telefonszámát:</label>
+                        <input type="tel" id="phone" name="phone"
+                               pattern="[0-9]{1}[0]-[0-9]{3}-[0-9]{4}" maxlength="9"
+                               required>
+                    </div>
+
+                    <div>
+                        <label for="zip">Irányítószám:</label>
+                        <input type="text" id="zip" name="zip" maxlength="4" minlenght="4"><br>
+                        <label for="city">Település:</label>
+                        <input type="text" id="city" name="city" maxlength="25"><br>
+                        <label for="street">Közterület neve:</label>
+                        <input type="text" id="street" name="street" maxlenght="75"><br>
+                        <label for="num">Házszám:</label>
+                        <input type="text" id="num" name="num" maxlength="3"><br>
+                    </div>
+                </form>
+                <input class="gomb" type="submit" name="send" value="Foglalás elküldése">
+
+                <a href="index.html">Vissza a főoldalra</a>
+            </section>
+            </div>
+        </body>
+
+</html>

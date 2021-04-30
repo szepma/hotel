@@ -1,0 +1,107 @@
+header
+{
+    margin: 0;
+    background-image: url(res/header.jpg);
+    background-size: 100%;
+    background-position: center;
+    padding: 25px;
+    padding-top: 70px;
+    box-sizing: border-box;
+    height: 250px;
+    text-align: center;
+}
+
+header h1
+{
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    max-width: 600px;
+    padding: 25px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    margin: auto;
+}
+div
+{
+    margin-top: 5px;
+    padding: 10px;
+}
+div label, input
+{
+    margin-top: 2px;
+}
+body
+{
+    margin: 0px;
+    padding: 0;
+    background-color: cornsilk;
+    font-family: sans-serif;
+}
+body h1
+{
+    text-align: center;
+}
+button
+{
+    height: auto;
+    width: auto;
+    display: block;
+    margin-top: 8px;
+}
+img
+{
+    height: 350px;
+    width: 350px;
+    object-fit: cover;
+    margin-top: 25px;
+}
+section
+{
+    margin-top: 10px;
+}
+.foglalas
+{
+    background-color: #70B8EF;
+}
+.gomb
+{
+    background-color: #4CAF50; /* Green */
+    border: solid rgba(255, 255, 255, 0);
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    max-width: 275px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+a
+{
+    background-color: #4CAF50; /* Green */
+    border: solid rgba(255, 255, 255, 0);
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    max-width: 275px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 25px;
+    cursor: pointer;
+    float: right;
+}
+.minden_mas
+{
+    margin-top: 0;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.szoba
+{
+    background-color: #EFA770;
+    padding: 10px;
+}
