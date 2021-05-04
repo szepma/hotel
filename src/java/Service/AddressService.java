@@ -14,7 +14,11 @@ public class AddressService {
             }
         }
         else {
-            return "Az adatok nem megfelelőek";
+            return "Az adatok nem megfelelőek - Address";
         }
+    }
+    
+    public static Addresses checkAddress(Integer house, Integer city, Integer street) {
+        return AddressRepo.checkAddress(house, city, street);
     }
 }

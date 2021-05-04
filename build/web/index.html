@@ -13,12 +13,12 @@
         function loadRooms() {
             var list = document.getElementById("list");
             var request = {"task": "getAllRooms"};
-            
+
             $.ajax({
                 url: "RoomController",
                 type: "POST",
                 data: request,
-                success: function(response) {
+                success: function (response) {
                     for (var i = 0; i < response.length; i++) {
                         //Create HTML tags
                         var newDiv = document.createElement("div");
@@ -29,81 +29,55 @@
                         var newImgDiv = document.createElement("div");
                         var newImg = document.createElement("img");
                         var newImgButton = document.createElement("a");
-                        
+
                         //Set class
                         newDiv.classList.add("szoba");
                         newImgDiv.classList.add("kepek");
                         
+                        const data = {
+                            room: response[i].roomid
+                        };
+                        const searchParams = new URLSearchParams(data);
+                        
                         //Set HTML content
                         newTitle.innerHTML = response[i].roomid + ". szoba";
                         newPrice.innerHTML = response[i].price + " Ft/éj";
-                        newCapacity.innerHTML = response[i].capacity + " Ft/éj";
+                        newCapacity.innerHTML = response[i].capacity + " fős szoba";
                         newExtra.innerHTML = response[i].extra;
                         newImg.src = response[i].picture;
-                        newImgButton.href = "foglalas.html";
+                        newImgButton.href = "foglalas.html?" + searchParams;
                         newImgButton.innerHTML = "Lefoglalom";
-                        
-                        //Append mgDiv children
+
+                        //Append imgDiv children
                         newImgDiv.appendChild(newImg);
                         newImgDiv.appendChild(newImgButton);
-                        
+
                         //Append newDiv children
                         newDiv.appendChild(newTitle);
                         newDiv.appendChild(newPrice);
                         newDiv.appendChild(newCapacity);
                         newDiv.appendChild(newExtra);
                         newDiv.appendChild(newImgDiv);
-                        
+
                         list.appendChild(newDiv);
                     }
                 },
-                error: function() {
+                error: function () {
                     alert("A szobák lekérése sikertelen");
                 }
             });
         }
     </script>
-    
+
     <header>
         <h1>Hotel weboldal</h1>
     </header>
-    
+
     <body onload="loadRooms()">
 
-        <h1>Foglaljon szobát most!</h1>
-        <div id="list" class="lista">
-<!--            <div class="szoba">
-                <h2>1. szoba</h2>
-                <p>7990 Ft/éj</p>
-                <p>2 fős</p>
-                <p>Jacuzzi</p>
-                <div class="kepek">
-                    <img src="res/hotel1.png" alt="1szoba">
-                    <a href="foglalas.html">Lefoglalom</a>
-                </div>
-            </div>
-            
-            <div class="szoba">
-                <h2>3. szoba</h2>
-                <p>12990 Ft/éj</p>
-                <p>4 fős</p>
-                <p>Klimatizált</p>
-                <div class="kepek">
-                    <img src="res/hotel2.jpg" alt="3szoba">
-                    <a href="foglalas.html">Lefoglalom</a>
-                </div>
-            </div>
-            
-            <div class="szoba">
-                <h2>7. szoba</h2>
-                <p>6990 Ft/éj</p>
-                <p>3 fős</p>
-                <p>4K Led TV</p>
-                <div class="kepek">
-                    <img src="res/hotel3.jpg" alt="7szoba">
-                    <a href="foglalas.html">Lefoglalom</a>
-                </div>
-            </div>-->
+        <div id="main">
+            <h1>Foglaljon szobát most!</h1>
+            <div id="list" class="lista"></div>
         </div>
     </body>
 </html>

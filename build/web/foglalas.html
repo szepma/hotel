@@ -7,41 +7,463 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </head>
 
     <header>
         <h1>Foglalja le az alábbi szobát!</h1>
     </header>
 
-    
+    <script>
+        function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+        }
 
-    <body onload="blockDate()">
+        function loadInfo() {
+            var roomSection = document.getElementById("roomSection");
+            var id = getURLParameter("room");
+            var request = {"task": "getRoomById",
+                "id": id};
+
+            $.ajax({
+                url: "RoomController",
+                type: "POST",
+                data: request,
+                success: function (response) {
+                    //Create HTML tags
+                    var newTitle = document.createElement("h3");
+                    var newCapacity = document.createElement("p");
+                    var newExtra = document.createElement("p");
+                    var newImg = document.createElement("img");
+
+                    //Set HTML content
+                    newTitle.innerHTML = response.roomid + ". szoba";
+                    newCapacity.innerHTML = response.capacity + " fős szoba";
+                    newExtra.innerHTML = response.extra;
+                    newImg.src = response.picture;
+
+                    //Append childred
+                    roomSection.appendChild(newTitle);
+                    roomSection.appendChild(newCapacity);
+                    roomSection.appendChild(newExtra);
+                    roomSection.appendChild(newImg);
+                },
+                error: function () {
+                    alert("Infó HIBA");
+                }
+            });
+        }
+
+        function checkGuest() {
+            var email = document.getElementById("email").value;
+            var returnValue = "";
+
+            var request = {"task": "checkGuest",
+                "email": email};
+            $.ajax({
+                url: "GuestController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function (response) {
+                    if (response.result == "Nincs ilyen") {
+                        returnValue = 0;
+                    } else {
+                        returnValue = response.result;
+                    }
+                },
+                error: function () {
+                    alert("VENDÉG HIBA");
+                }
+            });
+
+            console.log(returnValue + " guest check");
+            return returnValue;
+        }
+
+        function checkAddress() {
+            var city = checkCity();
+            var street = checkStreet();
+            var houseNum = document.getElementById("num").value;
+            var returnValue = "";
+
+            var request = {"task": "checkAddress",
+                "house": houseNum,
+                "city": city,
+                "street": street};
+            
+            console.log(request);
+
+            $.ajax({
+                url: "AddressController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function (response) {
+                    console.log("checkAddress response: " + response.result);
+                    if (response.result == "Nincs ilyen") {
+                        returnValue = 0;
+                        console.log("response result" + response.result);
+                    } else {
+                        returnValue = repsonse.result;
+                    }
+                },
+                error: function (response) {
+                    alert("CÍM HIBA " + returnValue + " asd " + response.result);
+                }
+            });
+
+            console.log(returnValue + " address check");
+            return returnValue;
+        }
+
+        function checkCity() {
+            var city = document.getElementById("city").value;
+            var returnValue = "";
+
+            var request = {"task": "checkCity",
+                "name": city};
+
+            $.ajax({
+                url: "CityController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function (response) {
+                    if (response.result == "Nincs ilyen") {
+                        returnValue = 0;
+                    } else {
+                        returnValue = response.result;
+                    }
+                },
+                error: function () {
+                    alert("VÁROS HIBA");
+                }
+            });
+
+            console.log(returnValue + " city check");
+            return returnValue;
+        }
+
+        function checkStreet() {
+            var street = document.getElementById("street").value;
+            var returnValue = "";
+
+            var request = {"task": "checkStreet",
+                "name": street};
+
+            $.ajax({
+                url: "StreetController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function (response) {
+                    if (response.result == "Nincs ilyen") {
+                        returnValue = 0;
+                    } else {
+                        returnValue = response.result;
+                    }
+                },
+                error: function () {
+                    alert("UTCA HIBA");
+                }
+            });
+
+            console.log(returnValue + " street check");
+            return returnValue;
+        }
+
+        function checkZip() {
+            var zip = document.getElementById("zip").value;
+            var returnValue = "";
+
+            var request = {"task": "checkZipcode",
+                "zipcode": zip};
+
+            $.ajax({
+                url: "ZipcodeController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function (response) {
+                    if (response.result == "Nincs ilyen") {
+                        returnValue = 0;
+                    } else {
+                        returnValue = response.result;
+                    }
+                },
+                error: function () {
+                    alert("ZIP HIBA");
+                }
+            });
+
+            console.log(returnValue + " zip");
+            return returnValue;
+        }
+
+        function addNewGuest() {
+            var fname = document.getElementById("fname").value;
+            var lname = document.getElementById("lname").value;
+            var phone = document.getElementById("phone").value;
+            var email = document.getElementById("email").value;
+            var returnValue = "";
+
+            var request = {"task": "addNewGuest",
+                "firstname": fname,
+                "lastname": lname,
+                "email": email,
+                "mobile": phone,
+                "address": checkAddress()};
+
+            $.ajax({
+                url: "GuestController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function (response) {
+                    returnValue = checkGuest();
+                    console.log(response);
+                },
+                error: function () {
+                    alert("A vendég hozzáadása sikertelen");
+                }
+            });
+
+            console.log(returnValue + " addGuest");
+            return returnValue;
+        }
+
+        function addNewAddress() {
+            var houseNum = document.getElementById("num").value;
+            var returnValue = "";
+
+            var request = {"task": "addNewAddress",
+                "houseNumber": houseNum,
+                "city": checkCity(),
+                "street": checkStreet()};
+
+            $.ajax({
+                url: "AddressController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function (response) {
+                    returnValue = checkAddress();
+                    console.log(response);
+                },
+                error: function () {
+                    alert("A cím hozzáadása sikertelen");
+                }
+            });
+
+            console.log(returnValue + " addAddress");
+            return returnValue;
+        }
+
+        function addNewCity() {
+            var city = document.getElementById("city").value;
+            var returnValue = "";
+
+            var request = {"task": "addNewCity",
+                "name": city};
+
+            $.ajax({
+                url: "CityController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function () {
+                    returnValue = checkCity();
+                },
+                error: function () {
+                    alert("A város hozzáadása sikertelen");
+                }
+            });
+
+            console.log(returnValue + " addCity");
+            return returnValue;
+        }
+
+        function addNewStreet() {
+            var street = document.getElementById("street").value;
+            var returnValue = "";
+
+            var request = {"task": "addNewStreet",
+                "name": street,
+                "zip": checkZip()};
+
+            $.ajax({
+                url: "StreetController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function () {
+                    returnValue = checkStreet();
+                },
+                error: function () {
+                    alert("Az utca hozzáadása sikertelen");
+                }
+            });
+
+            console.log(returnValue + " addStreet");
+            return returnValue;
+        }
+
+        function addNewZip() {
+            var zip = document.getElementById("zip").value;
+            var returnValue = "";
+
+            var request = {"task": "addNewZipcode",
+                "zipcode": zip};
+
+            $.ajax({
+                url: "ZipcodeController",
+                type: "POST",
+                data: request,
+                async: false,
+                success: function () {
+                    returnValue = checkZip();
+                },
+                error: function () {
+                    alert("A postai cím hozzáadása sikertelen");
+                }
+            });
+
+            console.log(returnValue + " addZip");
+            return returnValue;
+        }
+
+        function saveBooking() {
+            var guestId = checkGuest();
+            var addressId = checkAddress();
+            var cityId = checkCity();
+            var streetId = checkStreet();
+            var zipId = checkZip();
+
+            if (checkZip() == 0) {
+                zipId = addNewZip();
+            } else {
+                zipId = checkZip();
+            }
+
+            if (checkStreet() == 0) {
+                streetId = addNewStreet();
+            } else {
+                streetId = checkStreet();
+            }
+
+            if (checkCity() == 0) {
+                cityId = addNewCity();
+            } else {
+                cityId = checkCity();
+            }
+
+            if (checkAddress() == 0) {
+                addressId = addNewAddress();
+            } else {
+                addressId = checkAddress();
+            }
+
+            if (checkGuest() == 0) {
+                console.log("HALÓ");
+                guestId = addNewGuest();
+            } else {
+                guestId = checkGuest();
+            }
+
+//            if (checkGuest() == 0) {
+//                if (checkAddress() == 0) {
+//                    if (checkCity() == 0) {
+//                        if (checkStreet() == 0) {
+//                            if (checkZip() == 0) {
+//                                zipId = addNewZip();
+//                            }
+//                            else {
+//                                zipId = checkZip();
+//                            }
+//                            
+//                            streetId = addNewStreet();
+//                        }
+//                        else {
+//                            streetId = checkStreet();
+//                        }
+//                        
+//                        cityId = addNewCity();
+//                    }
+//                    else {
+//                        cityId = checkCity();
+//                    }
+//                    
+//                    addressId = addNewAddress();
+//                }
+//                else {
+//                    addressId = checkAddress();
+//                }
+//                
+//                guestId = addNewGuest();
+//            }
+//            else {
+//                guestId = checkGuest();
+//            }
+
+            var roomId = getURLParameter("room");
+            var services = document.getElementsByName("service");
+            var service = "";
+            for (var i = 0; i < services.length; i++) {
+                if (services[i].checked) {
+                    service = services[i].value;
+                    break;
+                }
+            }
+
+            var arrival = document.getElementById("arrival").value;
+            var leave = document.getElementById("leave").value;
+            var noGuests = document.getElementById("noGuests").value;
+
+            var houseNum = document.getElementById("num").value;
+
+            var request = {"task": "addNewBooking",
+                "arrival": arrival,
+                "leave": leave,
+                "noGuests": noGuests,
+                "guest": guestId,
+                "services": service,
+                "status": "1",
+                "room": roomId
+            };
+
+            console.log(request);
+
+            $.ajax({
+                url: "BookingController",
+                type: "POST",
+                data: request,
+                success: function (response) {
+                    alert(response.result);
+                },
+                error: function (response) {
+                    alert(response.result);
+                }
+            });
+
+        }
+    </script>
+
+    <body onload="loadInfo()">
         <div class="minden_mas">
 
             <h2>A szoba paraméterei:</h2>
 
-
-            <section class="szoba">
-                <h3>X. szoba</h3>
-                <p>X fő</p>
-                <p>X ágy ebből Y francia</p>
-                <p>Extra1</p>
-                <p>Extra2</p>
-                <article>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sagittis sagittis rhoncus. Quisque dolor nisi, posuere ut ex non, tristique porttitor justo. Aliquam erat volutpat. Vestibulum rhoncus massa ut pulvinar euismod. Cras eget metus lobortis, porta ipsum nec, scelerisque neque. Integer rhoncus ut dolor quis maximus. Maecenas ac sapien ultrices, tempus quam a, aliquam velit. Pellentesque malesuada porta dignissim. In dui massa, aliquam sed ex volutpat, mattis efficitur eros. Suspendisse scelerisque ut elit non efficitur. Vivamus vitae justo interdum, molestie urna sed, malesuada metus.</article>
-
-                <img src="res/foglalas1.jpg" alt="1foglalas">
-            </section>
+            <section id="roomSection" class="szoba"></section>
 
             <section class="foglalas">
                 <form>
                     <div>
                         <label>Válassza ki az ellátás típusát:</label><br>
-                        <input type="radio" id="radio1" name="service" value="AllIn">
+                        <input type="radio" id="radio1" name="service" value="1">
                         <label for="radio1">All Inclusive</label><br>
-                        <input type="radio" id="radio2" name="service" value="HalfP">
+                        <input type="radio" id="radio2" name="service" value="2">
                         <label for="radio2">Félpanzió</label><br>
-                        <input type="radio" id="radio3" name="service" value="Onellato">
+                        <input type="radio" id="radio3" name="service" value="3">
                         <label for="radio3">Önellátás</label><br>
                     </div>
 
@@ -54,6 +476,8 @@
                         <input type="date" id="leave" name="tavozas"
                                value="2021-04-28"
                                min="2021-01-01" max="2021-12-31"><br>
+                        <label>Vendégek száma:</label>
+                        <input type="number" id="noGuests">
                     </div>
 
                     <div>
@@ -65,7 +489,7 @@
                         <input type="email" id="email" name="email" maxlength="65"><br>
                         <label>Kérem adja meg a telefonszámát:</label>
                         <input type="tel" id="phone" name="phone"
-                               pattern="[0-9]{1}[0]-[0-9]{3}-[0-9]{4}" maxlength="9"
+                               pattern="[0-9]{1}[0]-[0-9]{3}-[0-9]{4}" maxlength="12"
                                required>
                     </div>
 
@@ -80,7 +504,7 @@
                         <input type="text" id="num" name="num" maxlength="3"><br>
                     </div>
                 </form>
-                <input class="gomb" type="submit" name="send" value="Foglalás elküldése">
+                <input class="gomb" type="submit" name="send" value="Foglalás elküldése" onclick="saveBooking()">
 
                 <a href="index.html">Vissza a főoldalra</a>
             </section>

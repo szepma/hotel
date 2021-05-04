@@ -18,7 +18,7 @@ public class GuestService {
             }
         }
         else {
-            return "Az adatok nem megfelelőek";
+            return "Az adatok nem megfelelőek - Guest";
         }
     }
     

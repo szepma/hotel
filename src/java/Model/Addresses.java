@@ -61,6 +61,10 @@ public class Addresses implements Serializable {
         this.cityid = cityid;
         this.streetid = streetid;
     }
+    
+    public static Addresses getAddressById(int id) {
+        return Database.getDbConn().find(Addresses.class, id);
+    }
 
     public Integer getAddressid() {
         return addressid;

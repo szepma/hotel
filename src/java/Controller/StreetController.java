@@ -49,7 +49,7 @@ public class StreetController extends HttpServlet {
                     returnValue.put("result", "Nincs ilyen");
                 }
                 else {
-                    returnValue.put("result", "Van ilyen");
+                    returnValue.put("result", street.getStreetid());
                 }
                 
                 out.print(returnValue);

@@ -48,7 +48,7 @@ public class CityController extends HttpServlet {
                     returnValue.put("result", "Nincs ilyen");
                 }
                 else {
-                    returnValue.put("result", "Van ilyen");
+                    returnValue.put("result", city.getCityid());
                 }
                 out.print(returnValue);
             }

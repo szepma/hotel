@@ -23,7 +23,9 @@ public class AddressController extends HttpServlet {
             if (request.getParameter("task").equals("addNewAddress")) {
                 JSONObject returnValue = new JSONObject();
                 
-                if (!request.getParameter("houseNumber").isEmpty() && !request.getParameter("city").isEmpty() && !request.getParameter("street").isEmpty()) {
+                if (!request.getParameter("houseNumber").isEmpty() &&
+                        !request.getParameter("city").isEmpty() &&
+                        !request.getParameter("street").isEmpty()) {
                     Integer houseNumber = Integer.parseInt(request.getParameter("houseNumber"));
                     Integer city = Integer.parseInt(request.getParameter("city"));
                     Integer street = Integer.parseInt(request.getParameter("street"));
@@ -34,9 +36,27 @@ public class AddressController extends HttpServlet {
                     returnValue.put("result", result);
                 }
                 else {
-                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve - Address");
                 }
                 out.print(returnValue.toString());
+            }
+            //end
+            
+            //checkAddress
+            if (request.getParameter("task").equals("checkAddress")) {
+                JSONObject returnValue = new JSONObject();
+                
+                Addresses address = AddressService.checkAddress(Integer.parseInt(request.getParameter("house")),
+                        Integer.parseInt(request.getParameter("city")),
+                        Integer.parseInt(request.getParameter("street")));
+                
+                if (address.getAddressid() == -1) {
+                    returnValue.put("result", "Nincs ilyen");
+                }
+                else {
+                    returnValue.put("result", address.getAddressid());
+                }
+                out.print(returnValue);
             }
         }
         catch (Exception ex) {

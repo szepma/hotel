@@ -14,7 +14,7 @@ public class BookingService {
             }
         }
         else {
-            return "Az adatok nem megfelelőek";
+            return "Az adatok nem megfelelőek - Booking";
         }
     }
     

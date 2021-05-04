@@ -36,7 +36,7 @@ public class GuestController extends HttpServlet {
                     returnValue.put("result", result);
                 }
                 else {
-                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve -- Guest");
                 }
                 out.print(returnValue.toString());
             }
@@ -52,7 +52,7 @@ public class GuestController extends HttpServlet {
                     returnValue.put("result", "Nincs ilyen");
                 }
                 else {
-                    returnValue.put("result", "Van ilyen");
+                    returnValue.put("result", guest.getGuestid());
                 }
                 out.print(returnValue);
             }

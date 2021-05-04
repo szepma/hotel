@@ -79,6 +79,21 @@ public class RoomController extends HttpServlet {
                 out.print(returnValue);
             }
             //end
+            
+            //getRoomyById
+            if (request.getParameter("task").equals("getRoomById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty()) {
+                    Rooms room = Rooms.getRoomsById(Integer.parseInt(request.getParameter("id")));
+                    returnValue = room.toJson();
+                }
+                else {
+                    returnValue.put("result", "Nincs ilyen szoba");
+                }
+                out.print(returnValue);
+            }
+            //end
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

@@ -33,7 +33,7 @@ public class ZipcodeController extends HttpServlet {
                     returnValue.put("result", result);
                 }
                 else {
-                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve -- Zip");
                 }
                 out.print(returnValue);
             }
@@ -49,7 +49,7 @@ public class ZipcodeController extends HttpServlet {
                     returnValue.put("result", "Nincs ilyen");
                 }
                 else {
-                    returnValue.put("result", "Van ilyen");
+                    returnValue.put("result", zipcode.getZipcodeid());
                 }
                 out.print(returnValue);
             }

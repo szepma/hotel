@@ -26,7 +26,13 @@ public class BookingController extends HttpServlet {
             if (request.getParameter("task").equals("addNewBooking")) {
                 JSONObject returnValue = new JSONObject();
                 
-                if (!request.getParameter("arrival").isEmpty() && !request.getParameter("leave").isEmpty() && !request.getParameter("noGuests").isEmpty() && !request.getParameter("guest").isEmpty() && !request.getParameter("sevices").isEmpty() && !request.getParameter("status").isEmpty() && !request.getParameter("room").isEmpty()) {
+                if (!request.getParameter("arrival").isEmpty() &&
+                        !request.getParameter("leave").isEmpty() &&
+                        !request.getParameter("noGuests").isEmpty() &&
+                        !request.getParameter("guest").isEmpty() &&
+                        !request.getParameter("services").isEmpty() &&
+                        !request.getParameter("status").isEmpty() &&
+                        !request.getParameter("room").isEmpty()) {
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     
                     Date bookingDate = formatter.parse(formatter.format(new Date()));
@@ -34,7 +40,7 @@ public class BookingController extends HttpServlet {
                     Date leaveDate = formatter.parse(request.getParameter("leave"));
                     Integer noGuest = Integer.parseInt(request.getParameter("noGuests"));
                     Integer guest = Integer.parseInt(request.getParameter("guest"));
-                    Integer service = Integer.parseInt(request.getParameter("sevices"));
+                    Integer service = Integer.parseInt(request.getParameter("services"));
                     Integer status = Integer.parseInt(request.getParameter("status"));
                     Integer room = Integer.parseInt(request.getParameter("room"));
 
@@ -44,7 +50,7 @@ public class BookingController extends HttpServlet {
                     returnValue.put("result", result);
                 }
                 else {
-                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve - Booking");
                 }
                 out.print(returnValue);
             }   
