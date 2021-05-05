@@ -19,22 +19,22 @@ public class BookingController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         try (PrintWriter out = response.getWriter()) {
-            
+
             //addNewBooking
             if (request.getParameter("task").equals("addNewBooking")) {
                 JSONObject returnValue = new JSONObject();
-                
-                if (!request.getParameter("arrival").isEmpty() &&
-                        !request.getParameter("leave").isEmpty() &&
-                        !request.getParameter("noGuests").isEmpty() &&
-                        !request.getParameter("guest").isEmpty() &&
-                        !request.getParameter("services").isEmpty() &&
-                        !request.getParameter("status").isEmpty() &&
-                        !request.getParameter("room").isEmpty()) {
+
+                if (!request.getParameter("arrival").isEmpty()
+                        && !request.getParameter("leave").isEmpty()
+                        && !request.getParameter("noGuests").isEmpty()
+                        && !request.getParameter("guest").isEmpty()
+                        && !request.getParameter("services").isEmpty()
+                        && !request.getParameter("status").isEmpty()
+                        && !request.getParameter("room").isEmpty()) {
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    
+
                     Date bookingDate = formatter.parse(formatter.format(new Date()));
                     Date arrivalDate = formatter.parse(request.getParameter("arrival"));
                     Date leaveDate = formatter.parse(request.getParameter("leave"));
@@ -53,22 +53,44 @@ public class BookingController extends HttpServlet {
                     returnValue.put("result", "A mezők nincsenek megfelelően kitöltve - Booking");
                 }
                 out.print(returnValue);
-            }   
+            }
             //end
-            
+
             //updateBookingStatusById
             if (request.getParameter("task").equals("updateBookingStatusById")) {
                 JSONObject returnValue = new JSONObject();
-                
+
                 if (!request.getParameter("id").isEmpty() && !request.getParameter("status").isEmpty()) {
                     Bookings bo = Bookings.getBookingsById(Integer.parseInt(request.getParameter("id")));
                     bo.setBookingstatusid(Integer.parseInt(request.getParameter("status")));
-                    
+
                     String result = BookingService.updateBookingStatusById(bo);
                     returnValue.put("result", result);
                 }
                 else {
                     returnValue.put("result", "A mezők nincsenek jól kitöltve");
+                }
+                out.print(returnValue);
+            }
+            //end
+
+            //checkRoomAvailability
+            if (request.getParameter("task").equals("checkRoomAvailability")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("arrival").isEmpty() &&
+                        !request.getParameter("leave").isEmpty() &&
+                        !request.getParameter("room").isEmpty()) {
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    
+                    if (BookingService.checkRoomAvailability(formatter.parse(request.getParameter("arrival")),
+                            formatter.parse(request.getParameter("leave")),
+                            Integer.parseInt(request.getParameter("room")))) {
+                        returnValue.put("result", "A szoba szabad");
+                    }
+                    else {
+                        returnValue.put("result", "A szoba foglalt");
+                    }
                 }
                 out.print(returnValue);
             }

@@ -199,6 +199,29 @@
             console.log(returnValue + " zip");
             return returnValue;
         }
+        
+        function checkRoomAvailability() {
+            var arrival = document.getElementById("arrival").value;
+            var leave = document.getElementById("leave").value;
+            var roomId = getURLParameter("room");
+            
+            var request = {"task": "checkRoomAvailability",
+                "arrival": arrival,
+                "leave": leave,
+                "room": roomId};
+            
+            $.ajax({
+                url: "BookingController",
+                type: "POST",
+                data: request,
+                success: function(response) {
+                    alert(response.result);
+                },
+                error: function() {
+                    alert("checkRoomAvailability HIBA")
+                }
+            });
+        }
 
         function addNewGuest() {
             var fname = document.getElementById("fname").value;
@@ -504,7 +527,7 @@
                         <input type="text" id="num" name="num" maxlength="3"><br>
                     </div>
                 </form>
-                <input class="gomb" type="submit" name="send" value="Foglalás elküldése" onclick="saveBooking()">
+                <input class="gomb" type="submit" name="send" value="Foglalás elküldése" onclick="checkRoomAvailability()">
 
                 <a href="index.html">Vissza a főoldalra</a>
             </section>

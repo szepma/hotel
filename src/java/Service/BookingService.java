@@ -2,6 +2,7 @@ package Service;
 
 import Model.Bookings;
 import Repository.BookingRepo;
+import java.util.Date;
 
 public class BookingService {
     public static String addNewBooking(Bookings bo) {
@@ -25,5 +26,9 @@ public class BookingService {
         else {
             return "A módosítás siertelen";
         }
+    }
+    
+    public static boolean checkRoomAvailability(Date arrival, Date leave, Integer room) {
+        return BookingRepo.checkRoomAvailability(arrival, leave, room);
     }
 }
